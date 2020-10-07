@@ -14,6 +14,9 @@ import Animated, { Easing } from "react-native-reanimated";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
 import Success from "../success";
 import Error from "../error";
+import axios from 'axios';
+import constants from "../Constants/constants";
+
 const { width, height } = Dimensions.get("window");
 
 const {
@@ -178,6 +181,12 @@ class Login extends Component {
         password: text,
       });
     }
+
+    // axios.post(constants.spring_backend_url + 'ColorsController/addItemColor', + this.state.username + '/' + this.state.password)
+    //     .then(res => {
+    //
+    //         }
+    //     );
   }
 
   render() {

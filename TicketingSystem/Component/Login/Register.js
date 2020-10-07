@@ -21,6 +21,7 @@ import {
   Modal,
 } from "react-native";
 import DatePicker from "react-native-datepicker";
+import * as Animatable from "react-native-animatable";
 
 class Register extends Component {
   constructor(props) {
@@ -29,6 +30,18 @@ class Register extends Component {
       date: "2016-05-15",
       modalState: false,
       modalStatepayment: false,
+      name:'',
+      nic:'',
+      mobileNo:'',
+      address:'',
+      email:'',
+      paymentMode:'',
+      cardHoldName:'',
+      cardNo:'',
+      expiredDate:'',
+      cvcNo:'',
+      password:'',
+      conPassword:''
     };
   }
 
@@ -44,6 +57,7 @@ class Register extends Component {
         modalState: true,
       });
     }
+    this.addLocalUser();
   };
 
   managePayment = () => {
@@ -59,6 +73,23 @@ class Register extends Component {
       });
     }
   };
+    addLocalUser() {
+        // axios.post(constants.spring_backend_url + 'ColorsController/addItemColor', + this.state.username + '/' + this.state.password)
+        //     .then(res => {
+        //
+        //         }
+        //     );
+        const localUser={
+            name: this.state.name,
+            password:this.state.password,
+            email:this.state.email,
+            role:"local user",
+            nic:this.state.nic,
+            mobile:this.state.mobileNo,
+            address: this.state.address
+        }
+        console.log(localUser);
+    };
 
   render() {
     let screenwidth = Dimensions.get("window").width;
@@ -164,6 +195,11 @@ class Register extends Component {
                       placeholder="John Doe"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              name:text
+                          })
+                      }
                     />
                   </View>
 
@@ -185,6 +221,11 @@ class Register extends Component {
                       placeholder="960591313V"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              nic:text
+                          })
+                      }
                     />
                   </View>
                   <View
@@ -207,6 +248,11 @@ class Register extends Component {
                       placeholder="0776355192"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              mobileNo:text
+                          })
+                      }
                     />
                   </View>
                   <View
@@ -227,6 +273,11 @@ class Register extends Component {
                       placeholder="SLIIT, Sri lanka"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              address:text
+                          })
+                      }
                     />
                   </View>
                   <View
@@ -247,6 +298,11 @@ class Register extends Component {
                       placeholder="samithaperera@gmail.com"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              email:text
+                          })
+                      }
                     />
                   </View>
                   <View
