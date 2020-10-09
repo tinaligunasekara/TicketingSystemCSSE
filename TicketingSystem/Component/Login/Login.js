@@ -153,6 +153,7 @@ class Login extends Component {
         } else if (this.state.password === "") {
             alert("plese enter password");
         } else {
+            console.log(constants.spring_backend_url + '/api/user/login/' + this.state.username + '/' + this.state.password)
             console.log('kkkk')
             axios.get(constants.spring_backend_url + '/api/user/login/' + this.state.username + '/' + this.state.password)
                 .then(res => {
