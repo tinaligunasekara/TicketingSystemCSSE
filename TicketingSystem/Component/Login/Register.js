@@ -22,6 +22,8 @@ import {
 } from "react-native";
 import DatePicker from "react-native-datepicker";
 import * as Animatable from "react-native-animatable";
+import axios from 'axios';
+import constants from "../Constants/constants";
 
 class Register extends Component {
   constructor(props) {
@@ -41,7 +43,13 @@ class Register extends Component {
       expiredDate:'',
       cvcNo:'',
       password:'',
-      conPassword:''
+      conPassword:'',
+        username:'',
+        paymentMethodId:'',
+        cardHoldersName:'',
+        cardNumber:'',
+        cvcNumber:'',
+        expireDate:''
     };
   }
 
@@ -74,22 +82,94 @@ class Register extends Component {
     }
   };
     addLocalUser() {
-        // axios.post(constants.spring_backend_url + 'ColorsController/addItemColor', + this.state.username + '/' + this.state.password)
-        //     .then(res => {
-        //
-        //         }
-        //     );
-        const localUser={
-            name: this.state.name,
-            password:this.state.password,
-            email:this.state.email,
-            role:"local user",
-            nic:this.state.nic,
-            mobile:this.state.mobileNo,
-            address: this.state.address
+
+        if (!this.validateEmail(this.state.email)) {
+            alert("Invalid email.")
+        }else{
+            if(this.state.name!=""){
+                if(this.validateNic(this.state.nic)){
+                    if(this.state.address!=""){
+                            if(this.state.mobileNo!=""){
+                                if(this.state.username!=""){
+                                    if(this.state.password==this.state.conPassword){
+                                        if(this.state.cardHoldersName!=""){
+                                            if(this.state.cardNumber!=""){
+                                                if(this.state.expireDate!=""){
+                                                    if(this.state.cvcNo){
+                                                        const localUser={
+                                                            userId:0,
+                                                            address: this.state.address,
+                                                            email:this.state.email,
+                                                            tokenNumber:this.state.nic,
+                                                            localUser:{
+                                                                localUserId:0,
+                                                                paymentMethod:{
+                                                                    cardHoldersName: this.state.cardHoldersName,
+                                                                    cardNumber: this.state.cardNumber,
+                                                                    cvcNumber:this.state.cvcNo,
+                                                                    expireDate:this.state.expireDate
+                                                                }
+                                                            },
+                                                            mobile:this.state.mobileNo,
+                                                            name: this.state.name,
+                                                            nic:this.state.nic,
+                                                            password:this.state.password,
+                                                            role:"local user"
+                                                        }
+                                                        console.log(localUser);
+                                                        axios.post(constants.spring_backend_url + '', localUser)
+                                                            .then(res => {
+
+                                                                }
+                                                            );
+                                                    }else{
+                                                        alert("Invalid CVC Number");
+                                                    }
+                                                }else{
+                                                    alert("Invalid Expire Date");
+                                                }
+
+                                            }else{
+                                                alert("Invalid Card Number");
+                                            }
+                                        }else{
+                                            alert("Invalid Card Holder's Name");
+                                        }
+
+                                    }else{
+                                        alert("Password does not match")
+                                    }
+
+                                }else{
+                                  alert("Invalid Username")
+                                }
+                            }else{
+                                alert("Invalid Mobile Number")
+                            }
+                    }else{
+                        alert("Invalid Address")
+                    }
+                }else{
+                    alert("Invalid NIC")
+                }
+            }else{
+                alert("Name is Empty")
+            }
         }
-        console.log(localUser);
+
     };
+    validateEmail = email => {
+        var re = /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    };
+    validateNic =nic=>{
+        var nicReg=/^[0-9]{9}[vVxX]$/;
+        return nicReg.test(nic);
+    }
+    validateMobilePhone =mobileNo=>{
+        var mobileNoReg=/^[8]*01[15-9]\d{8}$/;
+        return mobileNoReg.test(mobileNo);
+    }
 
   render() {
     let screenwidth = Dimensions.get("window").width;
@@ -336,6 +416,31 @@ class Register extends Component {
                       </Text>
                     </TouchableOpacity>
                   </View>
+                    <View
+                        style={{
+                            marginTop: 15,
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: "#154360",
+                                marginHorizontal: 20,
+                            }}
+                        >
+                            Username
+                        </Text>
+                        <TextInput
+                            autoFocus={false}
+                            placeholder="JohnDoe"
+                            style={styles.textInput}
+                            placeholderTextColor="#7F8C8D"
+                            onChangeText={(text) =>
+                                this.setState({
+                                    username:text
+                                })
+                            }
+                        />
+                    </View>
                   <View
                     style={{
                       marginTop: 15,
@@ -362,6 +467,7 @@ class Register extends Component {
                       onChangeText={(unitPrice) =>
                         this.setState({
                           unitPrice,
+                            password:unitPrice
                         })
                       }
                     />
@@ -392,6 +498,7 @@ class Register extends Component {
                       onChangeText={(unitPrice) =>
                         this.setState({
                           unitPrice,
+                            conPassword:unitPrice
                         })
                       }
                     />
@@ -703,6 +810,11 @@ class Register extends Component {
                       placeholder="Name"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              cardHoldersName:text
+                          })
+                      }
                     />
                   </View>
                   <View
@@ -724,6 +836,11 @@ class Register extends Component {
                       placeholder="Card No"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              cardNumber:text
+                          })
+                      }
                     />
                   </View>
                   <View style={{ flexDirection: "row" }}>
@@ -754,8 +871,9 @@ class Register extends Component {
                           },
                         }}
                         onDateChange={(date) => {
-                          this.setState({ date: date });
+                          this.setState({ expireDate: date });
                         }}
+
                       />
                     </View>
                     <View
@@ -778,6 +896,11 @@ class Register extends Component {
                         placeholder="CVC"
                         style={styles.textInput}
                         placeholderTextColor="#7F8C8D"
+                        onChangeText={(text) =>
+                            this.setState({
+                                cvcNo:text
+                            })
+                        }
                       />
                     </View>
                   </View>
