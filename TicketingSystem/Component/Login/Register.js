@@ -84,7 +84,7 @@ class Register extends Component {
     addLocalUser() {
 
         if (!this.validateEmail(this.state.email)) {
-            alert("Invalid email.")
+            alert("Invalid email.");
         }else{
             if(this.state.name!=""){
                 if(this.validateNic(this.state.nic)){
@@ -116,7 +116,7 @@ class Register extends Component {
                                                             password:this.state.password,
                                                             role:"local user"
                                                         }
-                                                        console.log(localUser);
+                                                     //   console.log(localUser);
                                                         axios.post(constants.spring_backend_url + '', localUser)
                                                             .then(res => {
 
@@ -396,7 +396,7 @@ class Register extends Component {
                         marginHorizontal: 20,
                       }}
                     >
-                      Payment Mode
+                      Account Details
                     </Text>
 
                     <TouchableOpacity
@@ -412,7 +412,7 @@ class Register extends Component {
                           color: "#7F8C8D",
                         }}
                       >
-                        Payment method
+                        Account Details
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -730,7 +730,7 @@ class Register extends Component {
                           color: "#222222",
                         }}
                       >
-                        Payment Method
+                        Account Details
                       </Text>
                     </View>
                     <View
