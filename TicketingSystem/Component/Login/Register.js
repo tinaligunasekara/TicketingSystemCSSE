@@ -1,86 +1,84 @@
 import React, { Component } from "react";
 import {
-  Container,
-  Header,
-  Content,
-  ListItem,
-  CheckBox,
-  Text,
-  Body,
-  Picker,
+    Container,
+    Header,
+    Content,
+    ListItem,
+    CheckBox,
+    Text,
+    Body,
+    Picker,
 } from "native-base";
 import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  AppRegistry,
-  ScrollView,
-  Dimensions,
-  TextInput,
-  Modal,
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    AppRegistry,
+    ScrollView,
+    Dimensions,
+    TextInput,
+    Modal,
 } from "react-native";
 import DatePicker from "react-native-datepicker";
-import * as Animatable from "react-native-animatable";
 import axios from 'axios';
 import constants from "../Constants/constants";
 
 class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: "2016-05-15",
-      modalState: false,
-      modalStatepayment: false,
-      name:'',
-      nic:'',
-      mobileNo:'',
-      address:'',
-      email:'',
-      paymentMode:'',
-      cardHoldName:'',
-      cardNo:'',
-      expiredDate:'',
-      cvcNo:'',
-      password:'',
-      conPassword:'',
-        username:'',
-        paymentMethodId:'',
-        cardHoldersName:'',
-        cardNumber:'',
-        cvcNumber:'',
-        expireDate:''
+    constructor(props) {
+        super(props);
+        this.state = {
+            date: "2016-05-15",
+            modalState: false,
+            modalStatepayment: false,
+            name:'',
+            nic:'',
+            mobileNo:'',
+            address:'',
+            email:'',
+            paymentMode:'',
+            cardHoldName:'',
+            cardNo:'',
+            expiredDate:'',
+            cvcNo:'',
+            password:'',
+            conPassword:'',
+            username:'',
+            paymentMethodId:'',
+            cardHoldersName:'',
+            cardNumber:'',
+            cvcNumber:'',
+            expireDate:''
+        };
+    }
+
+    manageSave = () => {
+        console.log("modalstate : " + this.state.modalState);
+
+        if (this.state.modalState === true) {
+            this.setState({
+                modalState: false,
+            });
+        } else if (this.state.modalState === false) {
+            this.addLocalUser();
+
+        }
+
     };
-  }
 
-  manageSave = () => {
-    console.log("modalstate : " + this.state.modalState);
+    managePayment = () => {
+        console.log("modalstate : " + this.state.modalStatepayment);
 
-    if (this.state.modalState === true) {
-      this.setState({
-        modalState: false,
-      });
-    } else if (this.state.modalState === false) {
-      this.setState({
-        modalState: true,
-      });
-    }
-    this.addLocalUser();
-  };
-
-  managePayment = () => {
-    console.log("modalstate : " + this.state.modalStatepayment);
-
-    if (this.state.modalStatepayment === true) {
-      this.setState({
-        modalStatepayment: false,
-      });
-    } else if (this.state.modalStatepayment === false) {
-      this.setState({
-        modalStatepayment: true,
-      });
-    }
-  };
+        if (this.state.modalStatepayment === true) {
+            this.setState({
+                modalStatepayment: false,
+            });
+        } else if (this.state.modalStatepayment === false) {
+            this.setState({
+                modalStatepayment: true,
+            });
+        }
+    };
     addLocalUser() {
 
         if (!this.validateEmail(this.state.email)) {
@@ -128,24 +126,79 @@ class Register extends Component {
                                                 }else{
                                                     alert("Invalid Expire Date");
                                                 }
+                        if(this.state.mobileNo!=""){
+                            if(this.state.username!=""){
+                                if(this.state.password==this.state.conPassword){
+                                    if(this.state.cardHoldersName!=""){
+                                        if(this.state.cardNumber!=""){
+                                            if(this.state.expireDate!=""){
+                                                if(this.state.cvcNo){
+                                                    axios.get(constants.spring_backend_url + '/api/user/checkusernameisexists/'+ this.state.username)
+                                                        .then(res => {
+                                                            if(res.data!==true){
+                                                                const localUser={
+                                                                    userId:0,
+                                                                    address: this.state.address,
+                                                                    email:this.state.email,
+                                                                    tokenNumber:this.state.nic,
+                                                                    localUser:{
+                                                                        localUserId:0,
+                                                                        paymentMethod:{
+                                                                            "paymentMethodId":0,
+                                                                            cardHoldersName: this.state.cardHoldersName,
+                                                                            cardNumber: this.state.cardNumber,
+                                                                            cvcNumber:this.state.cvcNo,
+                                                                            expireDate:this.state.expireDate
+                                                                        }
+                                                                    },
+                                                                    mobile:this.state.mobileNo,
+                                                                    name: this.state.name,
+                                                                    userName :this.state.username,
+                                                                    nic:this.state.nic,
+                                                                    password:this.state.password,
+                                                                    role:"local user"
+                                                                }
+                                                                axios.post(constants.spring_backend_url + '/api/localuser/create', localUser)
+                                                                    .then(res => {
+                                                                        if(res.data!==null){
+                                                                            this.setState({
+                                                                                modalState: true,
+                                                                            });
+                                                                        }
+                                                                    }).catch(function (error) {
+                                                                })
+                                                            }else{
+                                                                alert("User Name Is Exists In the System.Please Enter Another One");
+                                                            }
 
+                                                        }).catch(function (error) {
+                                                        console.log(error)
+                                                    })
+
+                                                }else{
+                                                    alert("Invalid CVC Number");
+                                                }
                                             }else{
-                                                alert("Invalid Card Number");
+                                                alert("Invalid Expire Date");
                                             }
-                                        }else{
-                                            alert("Invalid Card Holder's Name");
-                                        }
 
+                                        }else{
+                                            alert("Invalid Card Number");
+                                        }
                                     }else{
-                                        alert("Password does not match")
+                                        alert("Invalid Card Holder's Name");
                                     }
 
                                 }else{
-                                  alert("Invalid Username")
+                                    alert("Password does not match")
                                 }
+
                             }else{
-                                alert("Invalid Mobile Number")
+                                alert("Invalid Username")
                             }
+                        }else{
+                            alert("Invalid Mobile Number")
+                        }
                     }else{
                         alert("Invalid Address")
                     }
@@ -171,117 +224,117 @@ class Register extends Component {
         return mobileNoReg.test(mobileNo);
     }
 
-  render() {
-    let screenwidth = Dimensions.get("window").width;
-    let screeheight = Dimensions.get("window").height;
-    return (
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <View
-          style={{
-            flex: 0.18,
-            backgroundColor: "#ffffff",
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: "#ffffff",
-            }}
-          >
+    render() {
+        let screenwidth = Dimensions.get("window").width;
+        let screeheight = Dimensions.get("window").height;
+        return (
             <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 30,
-              }}
+                style={{
+                    flex: 1,
+                }}
             >
-              <Text
-                style={{
-                  fontSize: 28,
-                  color: "#154360",
-                  marginTop: 40,
-                }}
-              >
-                Create Your Account Here
-              </Text>
-            </View>
-          </View>
-        </View>
-        <ScrollView
-          horizontal={true}
-          pagingEnabled={true}
-          showsHorizontalScrollIndicator={false}
-          ref={(node) => (this.scroll = node)}
-          style={{
-            flex: 10,
-            backgroundColor: "#ffffff",
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "#ffffff",
-              flex: 1,
-              marginTop: 10,
-              width: screenwidth - 35,
-
-              borderRadius: 20,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-
-              elevation: 5,
-              marginLeft: 15,
-              marginBottom: 20,
-              marginRight: 20,
-            }}
-          >
-            <ScrollView showsHorizontalScrollIndicator={false}>
-              <View
-                style={{
-                  flex: 3,
-                  backgroundColor: "#fffffff",
-                }}
-              >
                 <View
-                  style={{
-                    margin: 10,
-                    marginTop: 25,
-                  }}
-                >
-                  <View
                     style={{
-                      marginTop: 15,
+                        flex: 0.18,
+                        backgroundColor: "#ffffff",
                     }}
-                  >
-                    <Text
-                      style={{
-                        color: "#154360",
-                        marginHorizontal: 20,
-                      }}
+                >
+                    <View
+                        style={{
+                            flex: 1,
+                            backgroundColor: "#ffffff",
+                        }}
                     >
-                      Name
-                    </Text>
-                    <TextInput
-                      onFocus={this.onFocus}
-                      autoFocus={false}
-                      placeholder="John Doe"
-                      style={styles.textInput}
-                      placeholderTextColor="#7F8C8D"
-                      onChangeText={(text) =>
-                          this.setState({
-                              name:text
-                          })
-                      }
-                    />
-                  </View>
+                        <View
+                            style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginTop: 30,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 28,
+                                    color: "#154360",
+                                    marginTop: 40,
+                                }}
+                            >
+                                Create Your Account Here
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+                <ScrollView
+                    horizontal={true}
+                    pagingEnabled={true}
+                    showsHorizontalScrollIndicator={false}
+                    ref={(node) => (this.scroll = node)}
+                    style={{
+                        flex: 10,
+                        backgroundColor: "#ffffff",
+                    }}
+                >
+                    <View
+                        style={{
+                            backgroundColor: "#ffffff",
+                            flex: 1,
+                            marginTop: 10,
+                            width: screenwidth - 35,
+
+                            borderRadius: 20,
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 2,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 3.84,
+
+                            elevation: 5,
+                            marginLeft: 15,
+                            marginBottom: 20,
+                            marginRight: 20,
+                        }}
+                    >
+                        <ScrollView showsHorizontalScrollIndicator={false}>
+                            <View
+                                style={{
+                                    flex: 3,
+                                    backgroundColor: "#fffffff",
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        margin: 10,
+                                        marginTop: 25,
+                                    }}
+                                >
+                                    <View
+                                        style={{
+                                            marginTop: 15,
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                color: "#154360",
+                                                marginHorizontal: 20,
+                                            }}
+                                        >
+                                            Name
+                                        </Text>
+                                        <TextInput
+                                            onFocus={this.onFocus}
+                                            autoFocus={false}
+                                            placeholder="John Doe"
+                                            style={styles.textInput}
+                                            placeholderTextColor="#7F8C8D"
+                                            onChangeText={(text) =>
+                                                this.setState({
+                                                    name:text
+                                                })
+                                            }
+                                        />
+                                    </View>
 
                   <View
                     style={{
@@ -396,7 +449,7 @@ class Register extends Component {
                         marginHorizontal: 20,
                       }}
                     >
-                      Account Details
+                      Payment Mode
                     </Text>
 
                     <TouchableOpacity
@@ -412,7 +465,7 @@ class Register extends Component {
                           color: "#7F8C8D",
                         }}
                       >
-                        Account Details
+                        Payment method
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -730,7 +783,7 @@ class Register extends Component {
                           color: "#222222",
                         }}
                       >
-                        Account Details
+                        Payment Method
                       </Text>
                     </View>
                     <View
