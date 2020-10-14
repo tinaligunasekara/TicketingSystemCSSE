@@ -940,7 +940,7 @@ class Register extends Component {
                                         style={{
                                             color: "#7F8C8D",
                                             marginBottom: 10,
-                                            marginTop:20
+                                            marginTop:10
                                         }}
                                     >
                                         Invalid {this.state.invalidText}
@@ -1070,9 +1070,11 @@ class Register extends Component {
                                         style={{
                                             color: "#154360",
                                             marginHorizontal: 20,
+                                            
+
                                         }}
                                     >
-                                        Accepted Cards
+                                        Transport Provider Account
                                     </Text>
 
                                     <View
@@ -1084,8 +1086,8 @@ class Register extends Component {
                                         }}
                                     >
                                         <Image
-                                            source={require("../../assets/PaymentMethods/cards.png")}
-                                            style={{ height: 50, width: 250 }}
+                                            source={require("../../assets/PaymentMethods/logo.png")}
+                                            style={{ height: 80, width: 80 }}
                                         />
                                     </View>
                                 </View>

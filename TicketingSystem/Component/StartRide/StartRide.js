@@ -26,7 +26,7 @@ import QRCode from 'react-native-qrcode-svg';
 import {DoubleBounce} from "react-native-loader";
 
 const qr = '';
-export default class profile extends Component {
+export default class StartRide extends Component {
     constructor(props) {
         super(props);
 
@@ -79,9 +79,7 @@ export default class profile extends Component {
 
 
             <View style={{flex: 1}}>
-               
                 <View style={{flex: 1.5}}>
-                <ScrollView>
                     <View
                         style={{
                             flex: 1,
@@ -124,7 +122,7 @@ export default class profile extends Component {
                                     fontWeight: "bold",
                                 }}
                             >
-                                Profile
+                                Start Ride
                             </Text>
                         </View>
                         <View
@@ -139,57 +137,11 @@ export default class profile extends Component {
                         style={{
                             flex: 9,
                             // backgroundColor: "#689F38",
-                            flexDirection: "row",
+                        
                         }}
                     >
                         <SafeAreaView style={styles.container}>
-                            <View style={styles.userInfoSection}>
-                                <View style={{flexDirection: "row", marginTop: 15}}>
-                                    <Avatar.Image
-                                        source={{
-                                            uri:
-                                                "https://avatars3.githubusercontent.com/u/44874559?s=400&v=4",
-                                        }}
-                                        size={80}
-                                    />
-                                    <View style={{marginLeft: 20}}>
-                                        <Title
-                                            style={[
-                                                styles.title,
-                                                {
-                                                    marginTop: 15,
-                                                    marginBottom: 5,
-                                                },
-                                            ]}
-                                        >
-                                            {this.state.name}
-                                        </Title>
-                                        <Caption style={styles.caption}>{this.state.nic}</Caption>
-                                    </View>
-                                </View>
-                            </View>
-
-                            <View style={styles.userInfoSection}>
-                                <View style={styles.row}>
-                                    <Icon name="map-marker-radius" color="#777777" size={20}/>
-                                    <Text style={{color: "#777777", marginLeft: 20}}>
-                                        {this.state.address}
-                                    </Text>
-                                </View>
-                                <View style={styles.row}>
-                                    <Icon name="phone" color="#777777" size={20}/>
-                                    <Text style={{color: "#777777", marginLeft: 20}}>
-                                        {this.state.phoneNumber}
-                                    </Text>
-                                </View>
-                                <View style={styles.row}>
-                                    <Icon name="email" color="#777777" size={20}/>
-                                    <Text style={{color: "#777777", marginLeft: 20}}>
-                                        {this.state.email}
-                                    </Text>
-                                </View>
-                            </View>
-
+                           
                             <View style={styles.infoBoxWrapper}>
                                 <View
                                     style={[
@@ -213,19 +165,10 @@ export default class profile extends Component {
                                 </View>
                             </View>
 
-                            <View style={styles.menuWrapper}>
-                                <View style={styles.menuItem}>
-                                    <Icon name="id-card" color="#154360" size={25}/>
-                                    <Text style={styles.menuItemText}>
-                                        Tocken Number - {this.state.qrCode}
-                                    </Text>
-                                </View>
-                            </View>
+                        
                         </SafeAreaView>
                     </View>
-                    </ScrollView>
                 </View>
-               
             </View>
         );
     }
@@ -266,7 +209,7 @@ const styles = StyleSheet.create({
         borderTopColor: "#dddddd",
         borderTopWidth: 1,
         flexDirection: "row",
-        height: 300,
+        height: "100%",
     },
     infoBox: {
         width: "100%",
