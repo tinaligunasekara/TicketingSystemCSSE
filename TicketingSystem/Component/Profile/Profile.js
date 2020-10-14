@@ -23,6 +23,7 @@ import {FontAwesome5} from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {AsyncStorage} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import {DoubleBounce} from "react-native-loader";
 
 const qr = '';
 export default class profile extends Component {
@@ -37,7 +38,8 @@ export default class profile extends Component {
             address: '',
             nic: '',
             phoneNumber: '',
-            email: ''
+            email: '',
+            loaderStatus: true
         };
     }
 
@@ -59,7 +61,8 @@ export default class profile extends Component {
                 name: name,
                 address: address,
                 nic: nic,
-                phoneNumber: phoneNumber
+                phoneNumber: phoneNumber,
+                loaderStatus: false
             })
         } catch (error) {
 
@@ -68,10 +71,13 @@ export default class profile extends Component {
 
 
     render() {
-        let screenwidth = Dimensions.get("window").width;
-        let screeheight = Dimensions.get("window").height;
-        var qr = AsyncStorage.getItem('tokenNumber');
+        var qr = this.state.qrCode;
+        console.log('JJJJJJJJJJJJJJJ');
+        console.log(qr);
+        console.log('jjjjjjjjjjjjj')
         return (
+
+
             <View style={{flex: 1}}>
                 <View style={{flex: 1.5}}>
                     <View
@@ -193,18 +199,15 @@ export default class profile extends Component {
                                     ]}
                                 >
                                     <Title style={{marginBottom: 20}}>QR CODE</Title>
-                                    <QRCode
-                                        style={{height: 200, width: 200}}
-                                        value="http://awesome.link.qr"
-                                    />
-                                    {/*<QRCode*/}
-                                    {/*style={{height: 200, width: 200}}*/}
-                                    {/**/}
-                                    {/*/>*/}
-                                    {/*<Image*/}
-                                    {/*source={require("../../assets/Styles/QR.webp")}*/}
-                                    {/*style={{ height: 200, width: 200 }}*/}
-                                    {/*/>*/}
+                                    {
+                                        this.state.loaderStatus ?
+                                            <DoubleBounce size={10} color="#1CAFF6" />
+                                            :
+                                            <QRCode
+                                                style={{height: 200, width: 200}}
+                                                value={'' + qr + ''}
+                                            />
+                                    }
                                 </View>
                             </View>
 
