@@ -21,6 +21,8 @@ import {
   Modal,
 } from "react-native";
 import DatePicker from "react-native-datepicker";
+import axios from "axios";
+import constants from "../Constants/constants";
 
 class ForeignRegister extends Component {
   constructor(props) {
@@ -28,6 +30,11 @@ class ForeignRegister extends Component {
     this.state = {
       date: "2016-05-15",
       modalState: false,
+      name:'',
+      passportNo:'',
+      tokenNo:'',
+      password:'',
+      conPassowrd:''
     };
   }
 
@@ -39,12 +46,54 @@ class ForeignRegister extends Component {
         modalState: false,
       });
     } else if (this.state.modalState === false) {
-      this.setState({
-        modalState: true,
-      });
+        this.addForeignUser();
     }
   };
+    addForeignUser(){
+        if(this.state.name!=""){
+            if(this.state.passportNo!=""){
+                if(this.state.tokenNo!=""){
+                    if(this.state.password!=""){
+                        if(this.state.conPassowrd!=""){
+                            if(this.state.password==this.state.conPassowrd){
+                                const foreignUser={
+                                    userId:0,
+                                    name: this.state.name,
+                                    passportNo:this.state.passportNo,
+                                    tokenNumber:this.state.tokenNo,
+                                    password:this.state.password,
+                                    role:"Foreign user"
+                                }
+                                console.log(foreignUser);
+                                axios.post(constants.spring_backend_url + '/api/localuser/create', foreignUser)
+                                    .then(res => {
+                                        if(res.data!==null){
+                                            this.setState({
+                                                modalState: true,
+                                            });
+                                        }
+                                    }).catch(function (error) {
+                                })
+                            }else{
+                                alert("Password does not match");
+                            }
+                        }else{
+                            alert("Confirm Password is Empty");
+                        }
 
+                    }else{
+                        alert("Password is Empty");
+                    }
+                }else{
+                    alert("Token is Empty");
+                }
+            }else{
+                alert("PassportNo is Empty");
+            }
+        }else{
+            alert("Name is Empty!");
+        }
+    }
   render() {
     let screenwidth = Dimensions.get("window").width;
     let screeheight = Dimensions.get("window").height;
@@ -149,6 +198,11 @@ class ForeignRegister extends Component {
                       placeholder="John Doe"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              name:text
+                          })
+                      }
                     />
                   </View>
                   <View
@@ -169,6 +223,11 @@ class ForeignRegister extends Component {
                       placeholder="Passport No"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              passportNo:text
+                          })
+                      }
                     />
                   </View>
                   <View
@@ -191,6 +250,11 @@ class ForeignRegister extends Component {
                       placeholder="960591313"
                       style={styles.textInput}
                       placeholderTextColor="#7F8C8D"
+                      onChangeText={(text) =>
+                          this.setState({
+                              tokenNo:text
+                          })
+                      }
                     />
                   </View>
                   <View
@@ -216,9 +280,9 @@ class ForeignRegister extends Component {
                         backgroundColor: "white",
                       }}
                       placeholderTextColor="#7F8C8D"
-                      onChangeText={(unitPrice) =>
+                      onChangeText={(text) =>
                         this.setState({
-                          unitPrice,
+                          password:text
                         })
                       }
                     />
@@ -247,9 +311,9 @@ class ForeignRegister extends Component {
                         backgroundColor: "white",
                       }}
                       placeholderTextColor="#7F8C8D"
-                      onChangeText={(unitPrice) =>
+                      onChangeText={(text) =>
                         this.setState({
-                          unitPrice,
+                            conPassowrd:text
                         })
                       }
                     />
