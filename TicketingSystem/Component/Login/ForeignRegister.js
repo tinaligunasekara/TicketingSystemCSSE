@@ -50,22 +50,29 @@ class ForeignRegister extends Component {
     }
   };
     addForeignUser(){
-        if(this.state.name!=""){
-            if(this.state.passportNo!=""){
-                if(this.state.tokenNo!=""){
-                    if(this.state.password!=""){
-                        if(this.state.conPassowrd!=""){
-                            if(this.state.password==this.state.conPassowrd){
+        if(this.state.name!==""){
+            if(this.state.passportNo!==""){
+                if(this.state.tokenNo!==""){
+                    if(this.state.password!==""){
+                        if(this.state.conPassowrd!==""){
+                            if(this.state.password===this.state.conPassowrd){
                                 const foreignUser={
                                     userId:0,
                                     name: this.state.name,
-                                    passportNo:this.state.passportNo,
+                                    accountBalance :0,
+                                    address :'',
+                                    nic :'',
+                                    mobile :'',
+                                    email :'',
                                     tokenNumber:this.state.tokenNo,
                                     password:this.state.password,
+                                    foreigner :{
+                                        foreignerId :0,
+                                        passportNumber : this.state.passportNo
+                                    },
                                     role:"Foreign user"
                                 }
-                                console.log(foreignUser);
-                                axios.post(constants.spring_backend_url + '/api/localuser/create', foreignUser)
+                                axios.post(constants.spring_backend_url + '/api/foreignuser/create', foreignUser)
                                     .then(res => {
                                         if(res.data!==null){
                                             this.setState({
