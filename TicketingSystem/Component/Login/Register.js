@@ -87,45 +87,6 @@ class Register extends Component {
             if(this.state.name!=""){
                 if(this.validateNic(this.state.nic)){
                     if(this.state.address!=""){
-                            if(this.state.mobileNo!=""){
-                                if(this.state.username!=""){
-                                    if(this.state.password==this.state.conPassword){
-                                        if(this.state.cardHoldersName!=""){
-                                            if(this.state.cardNumber!=""){
-                                                if(this.state.expireDate!=""){
-                                                    if(this.state.cvcNo){
-                                                        const localUser={
-                                                            userId:0,
-                                                            address: this.state.address,
-                                                            email:this.state.email,
-                                                            tokenNumber:this.state.nic,
-                                                            localUser:{
-                                                                localUserId:0,
-                                                                paymentMethod:{
-                                                                    cardHoldersName: this.state.cardHoldersName,
-                                                                    cardNumber: this.state.cardNumber,
-                                                                    cvcNumber:this.state.cvcNo,
-                                                                    expireDate:this.state.expireDate
-                                                                }
-                                                            },
-                                                            mobile:this.state.mobileNo,
-                                                            name: this.state.name,
-                                                            nic:this.state.nic,
-                                                            password:this.state.password,
-                                                            role:"local user"
-                                                        }
-                                                     //   console.log(localUser);
-                                                        axios.post(constants.spring_backend_url + '', localUser)
-                                                            .then(res => {
-
-                                                                }
-                                                            );
-                                                    }else{
-                                                        alert("Invalid CVC Number");
-                                                    }
-                                                }else{
-                                                    alert("Invalid Expire Date");
-                                                }
                         if(this.state.mobileNo!=""){
                             if(this.state.username!=""){
                                 if(this.state.password==this.state.conPassword){
