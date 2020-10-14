@@ -237,7 +237,7 @@ class AccountDetails extends Component {
                   />
                   <Text
                     style={{
-                      color: "Black",
+                      color: "black",
                       marginBottom: 10,
                       fontSize: 18,
                     }}

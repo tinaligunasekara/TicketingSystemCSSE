@@ -30,6 +30,7 @@ class Register extends Component {
         this.state = {
             date: "2016-05-15",
             modalState: false,
+            modalStateValidation: false,
             modalStatepayment: false,
             name:'',
             nic:'',
@@ -48,22 +49,46 @@ class Register extends Component {
             cardHoldersName:'',
             cardNumber:'',
             cvcNumber:'',
-            expireDate:''
+            expireDate:'',
+
+
+            colorname:'#154360',
+            colornic:'#154360',
+            colormobileNo:'#154360',
+            coloraddress:'#154360',
+            coloremail:'#154360',
+            colorpaymentMode:'#154360',
+            colorcardHoldName:'#154360',
+            colorcardNo:'#154360',
+            colorexpiredDate:'#154360',
+            colorcvcNo:'#154360',
+            colorpassword:'#154360',
+            colorconPassword:'#154360',
+            colorusername:'#154360',
+            colorpaymentMethodId:'#154360',
+            colorcardHoldersName:'#154360',
+            colorcardNumber:'#154360',
+            colorcvcNumber:'#154360',
+            colorexpireDate:'#154360',
+
+            invalidText:'',
         };
     }
 
     manageSave = () => {
         console.log("modalstate : " + this.state.modalState);
-
+        this.validateAllFields;
         if (this.state.modalState === true) {
             this.setState({
                 modalState: false,
             });
+        
         } else if (this.state.modalState === false) {
             this.addLocalUser();
+           
 
         }
-
+      
     };
 
     managePayment = () => {
@@ -79,21 +104,181 @@ class Register extends Component {
             });
         }
     };
+
+    validateAllFields = () => {
+        console.log("card holder name : " + this.state.cardHoldersName);
+        console.log("Card Number  :" + this.state.cardNumber );
+        console.log("CVC :" + this.state.cvcNo);
+        console.log("Date :" + this.state.expireDate );
+        console.log("color :" + this.state.colorpaymentMode );
+
+        this.setState({
+            colorname:'#154360',
+            colornic:'#154360',
+            colormobileNo:'#154360',
+            coloraddress:'#154360',
+            coloremail:'#154360',
+            colorpaymentMode:'#154360',
+            colorcardHoldName:'#154360',
+            colorcardNo:'#154360',
+            colorexpiredDate:'#154360',
+            colorcvcNo:'#154360',
+            colorpassword:'#154360',
+            colorconPassword:'#154360',
+            colorusername:'#154360',
+            colorpaymentMethodId:'#154360',
+            colorcardHoldersName:'#154360',
+            colorcardNumber:'#154360',
+            colorcvcNumber:'#154360',
+            colorexpireDate:'#154360',
+            
+        });
+        console.log("color2 :" + this.state.colorpaymentMode );
+
+        if(this.state.email == ""){
+            this.setState({
+                coloremail: "#E74C3C",
+                
+            });
+            
+        }else{
+            if(!this.validateEmail(this.state.email)){
+                this.setState({
+                    invalidText: "Email Address",
+                    modalStateValidation:true,
+                });
+               
+            }
+        }
+
+       
+        if(this.state.name == ""){
+            this.setState({
+                colorname: "#E74C3C",
+                
+            });
+        }
+
+        if(this.state.nic==""){
+            this.setState({
+                colornic: "#E74C3C",
+            });
+        }else{
+           if(!this.validateNic(this.state.nic))
+           {
+            this.setState({
+                invalidText: "NIC Number",
+                modalStateValidation:true,
+                
+            });
+           }
+        }
+        if(this.state.address==""){
+            this.setState({
+                coloraddress: "#E74C3C",
+            });
+        }
+        if(this.state.mobileNo==""){
+            this.setState({
+                colormobileNo: "#E74C3C",
+            });
+        }
+        
+        // else{
+        //     if(!this.validateMobilePhone(this.state.mobileNo)){
+        //         alert("Invalid mobile")
+        //     }
+
+        // }
+        if(this.state.username==""){
+            this.setState({
+                colorusername: "#E74C3C",
+            });
+        }
+        if(this.state.password==""){
+            this.setState({
+                colorpassword: "#E74C3C",
+               
+            });
+        }
+        if(this.state.conPassword == ""){
+            this.setState({
+             
+                colorconPassword: "#E74C3C",
+            });
+        }
+        if(this.state.password!==this.state.conPassword){
+            this.setState({
+                colorpassword: "#E74C3C",
+                colorconPassword: "#E74C3C",
+            });
+        }
+        if(this.state.cardHoldersName==""){
+            this.setState({
+                colorcardHoldersName: "#E74C3C",
+            });
+        }
+        if(this.state.cardNumber==""){
+            this.setState({
+                colorcardNumber: "#E74C3C",
+            });
+        }
+       
+        if(this.state.expireDate==""){
+            this.setState({
+                colorexpireDate: "#E74C3C",
+            }); 
+        }
+        if(this.state.cvcNo == ""){
+            this.setState({
+                colorcvcNo: "#E74C3C",
+            });
+        }
+        if(this.state.cardHoldersName !=="" && this.state.cardNumber !== "" && this.state.cvcNo !== "" && this.state.expireDate !== ""){
+            
+            this.setState({
+                colorpaymentMode: "#154360",
+            });
+            console.log("color3 :" + this.state.colorpaymentMode );
+        }else{
+            this.setState({
+                colorpaymentMode: "#E74C3C",
+            });
+            console.log("color4 else :" + this.state.colorpaymentMode );
+        }
+
+
+
+        this.manageSave();
+
+    };
+
     addLocalUser() {
 
-        if (!this.validateEmail(this.state.email)) {
-            alert("Invalid email.")
-        }else{
+        if (this.validateEmail(this.state.email)) {
+            console.log("0")
+           
             if(this.state.name!=""){
+                console.log("1")
                 if(this.validateNic(this.state.nic)){
+                    console.log("2")
                     if(this.state.address!=""){
+                        console.log("3")
                         if(this.state.mobileNo!=""){
+                            console.log("4")
                             if(this.state.username!=""){
+                                console.log("5")
                                 if(this.state.password==this.state.conPassword){
+                                    console.log("6")
                                     if(this.state.cardHoldersName!=""){
+                                        console.log("7")
                                         if(this.state.cardNumber!=""){
+                                            console.log("8")
                                             if(this.state.expireDate!=""){
+                                                console.log("9")
                                                 if(this.state.cvcNo){
+                                                    console.log("10")
+                                                 
                                                     axios.get(constants.spring_backend_url + '/api/user/checkusernameisexists/'+ this.state.username)
                                                         .then(res => {
                                                             if(res.data!==true){
@@ -136,39 +321,16 @@ class Register extends Component {
                                                         console.log(error)
                                                     })
 
-                                                }else{
-                                                    alert("Invalid CVC Number");
-                                                }
-                                            }else{
-                                                alert("Invalid Expire Date");
-                                            }
-
-                                        }else{
-                                            alert("Invalid Card Number");
-                                        }
-                                    }else{
-                                        alert("Invalid Card Holder's Name");
-                                    }
-
-                                }else{
-                                    alert("Password does not match")
-                                }
-
-                            }else{
-                                alert("Invalid Username")
-                            }
-                        }else{
-                            alert("Invalid Mobile Number")
-                        }
-                    }else{
-                        alert("Invalid Address")
-                    }
-                }else{
-                    alert("Invalid NIC")
-                }
-            }else{
-                alert("Name is Empty")
-            }
+                                                }else{}
+                                            }else{}
+                                        }else{}
+                                    }else{}
+                                }else{}
+                            }else{}
+                        }else{}
+                    }else{}
+                }else{}
+            }else{}
         }
 
     };
@@ -276,8 +438,9 @@ class Register extends Component {
                                         }}
                                     >
                                         <Text
+                                        
                                             style={{
-                                                color: "#154360",
+                                                color:this.state.colorname,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -287,7 +450,7 @@ class Register extends Component {
                                             onFocus={this.onFocus}
                                             autoFocus={false}
                                             placeholder="John Doe"
-                                            style={styles.textInput}
+                                            style={{...styles.textInput ,borderColor: this.state.colorname}}
                                             placeholderTextColor="#7F8C8D"
                                             onChangeText={(text) =>
                                                 this.setState({
@@ -304,7 +467,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.colornic,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -313,7 +476,7 @@ class Register extends Component {
                                         <TextInput
                                             autoFocus={false}
                                             placeholder="960591313V"
-                                            style={styles.textInput}
+                                            style={{...styles.textInput ,borderColor:this.state.colornic,}}
                                             placeholderTextColor="#7F8C8D"
                                             onChangeText={(text) =>
                                                 this.setState({
@@ -329,7 +492,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.colormobileNo,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -340,7 +503,7 @@ class Register extends Component {
                                             keyboardType="number-pad"
                                             autoFocus={false}
                                             placeholder="0776355192"
-                                            style={styles.textInput}
+                                            style={{...styles.textInput ,borderColor: this.state.colormobileNo,}}
                                             placeholderTextColor="#7F8C8D"
                                             onChangeText={(text) =>
                                                 this.setState({
@@ -356,7 +519,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.coloraddress,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -365,7 +528,7 @@ class Register extends Component {
                                         <TextInput
                                             autoFocus={false}
                                             placeholder="SLIIT, Sri lanka"
-                                            style={styles.textInput}
+                                            style={{...styles.textInput ,borderColor:  this.state.coloraddress,}}
                                             placeholderTextColor="#7F8C8D"
                                             onChangeText={(text) =>
                                                 this.setState({
@@ -381,7 +544,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.coloremail,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -390,7 +553,7 @@ class Register extends Component {
                                         <TextInput
                                             autoFocus={false}
                                             placeholder="samithaperera@gmail.com"
-                                            style={styles.textInput}
+                                            style={{...styles.textInput , borderColor: this.state.coloremail}}
                                             placeholderTextColor="#7F8C8D"
                                             onChangeText={(text) =>
                                                 this.setState({
@@ -406,7 +569,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.colorpaymentMode,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -418,6 +581,7 @@ class Register extends Component {
                                             style={{
                                                 ...styles.textInput,
                                                 backgroundColor: "white",
+                                                borderColor:this.state.colorpaymentMode
                                             }}
                                         >
                                             <Text
@@ -437,7 +601,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.colorusername,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -446,7 +610,7 @@ class Register extends Component {
                                         <TextInput
                                             autoFocus={false}
                                             placeholder="JohnDoe"
-                                            style={styles.textInput}
+                                            style={{...styles.textInput ,borderColor:this.state.colorusername,}}
                                             placeholderTextColor="#7F8C8D"
                                             onChangeText={(text) =>
                                                 this.setState({
@@ -462,7 +626,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.colorpassword,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -475,6 +639,7 @@ class Register extends Component {
                                             placeholder="*****"
                                             style={{
                                                 ...styles.textInput,
+                                                borderColor:this.state.colorpassword,
                                                 backgroundColor: "white",
                                             }}
                                             placeholderTextColor="#7F8C8D"
@@ -493,7 +658,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.colorconPassword,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -506,6 +671,7 @@ class Register extends Component {
                                             placeholder="*****"
                                             style={{
                                                 ...styles.textInput,
+                                                borderColor:this.state.colorconPassword,
                                                 backgroundColor: "white",
                                             }}
                                             placeholderTextColor="#7F8C8D"
@@ -522,7 +688,8 @@ class Register extends Component {
                                             marginTop: 15,
                                         }}
                                     >
-                                        <TouchableOpacity onPress={this.manageSave}>
+           
+                                        <TouchableOpacity onPress={this.validateAllFields }>
                                             <View
                                                 style={{
                                                     ...styles.button,
@@ -697,6 +864,128 @@ class Register extends Component {
                     </Modal>
                 </View>
 
+{/* Validation modal */}
+
+<View>
+                    <Modal transparent={true} visible={this.state.modalStateValidation}>
+                        <View
+                            style={{
+                                backgroundColor: "#000000aa",
+                                flex: 1,
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <View
+                                style={{
+                                    backgroundColor: "#ffffff",
+                                    paddingVertical: 20,
+                                    borderTopColor: "black",
+                                    paddingHorizontal: 10,
+                                    borderRadius: 23,
+                                }}
+                            >
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.setState({ modalStateValidation: false });
+                                    }}
+                                >
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                            height: 20,
+                                            width: 300,
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            <Text
+                                                style={{
+                                                    fontWeight: "bold",
+                                                    fontSize: 18,
+                                                    color: "#222222",
+                                                }}
+                                            >
+                                                Warning !
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                                <View
+                                    style={{
+                                        borderBottomColor: "#d3d3d3",
+                                        borderBottomWidth: 1,
+                                        padding: 10,
+                                    }}
+                                ></View>
+
+                                <View
+                                    style={{
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginTop: 10,
+                                    }}
+                                >
+                                    <Image
+                                        source={require("../../assets/Alerts/warning.gif")}
+                                        style={{ height: 80, width:80 }}
+                                    />
+                                    <Text
+                                        style={{
+                                            color: "#7F8C8D",
+                                            marginBottom: 10,
+                                            marginTop:20
+                                        }}
+                                    >
+                                        Invalid {this.state.invalidText}
+                                    </Text>
+                                </View>
+
+                                <View
+                                    style={{
+                                        marginTop: 15,
+                                        height: 40,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <TouchableOpacity
+                                         onPress={() => {
+                                            this.setState({ modalStateValidation: false });
+                                        }}
+                                        style={{
+                                            ...styles.button,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            width: 180,
+                                            height: 40,
+                                            borderRadius: 30,
+                                            backgroundColor: "#154360",
+                                            marginRight: 10,
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: 20,
+                                                fontWeight: "bold",
+                                                color: "#ffffff",
+                                            }}
+                                        >
+                                            OK
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
+                </View>
+                
                 {/* Payment method */}
                 <View>
                     <Modal transparent={true} visible={this.state.modalStatepayment}>
@@ -813,7 +1102,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.colorcardHoldersName,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -822,7 +1111,7 @@ class Register extends Component {
                                         <TextInput
                                             autoFocus={false}
                                             placeholder="Name"
-                                            style={styles.textInput}
+                                            style={{...styles.textInput ,borderColor: this.state.colorcardHoldersName,}}
                                             placeholderTextColor="#7F8C8D"
                                             onChangeText={(text) =>
                                                 this.setState({
@@ -838,7 +1127,7 @@ class Register extends Component {
                                     >
                                         <Text
                                             style={{
-                                                color: "#154360",
+                                                color: this.state.colorcardNumber,
                                                 marginHorizontal: 20,
                                             }}
                                         >
@@ -848,7 +1137,7 @@ class Register extends Component {
                                             keyboardType="number-pad"
                                             autoFocus={false}
                                             placeholder="Card No"
-                                            style={styles.textInput}
+                                            style={{...styles.textInput ,borderColor: this.state.colorcardNumber,}}
                                             placeholderTextColor="#7F8C8D"
                                             onChangeText={(text) =>
                                                 this.setState({
@@ -898,7 +1187,7 @@ class Register extends Component {
                                         >
                                             <Text
                                                 style={{
-                                                    color: "#154360",
+                                                    color: this.state.colorcvcNo,
                                                     marginHorizontal: 20,
                                                 }}
                                             >
@@ -908,7 +1197,7 @@ class Register extends Component {
                                                 keyboardType="number-pad"
                                                 autoFocus={false}
                                                 placeholder="CVC"
-                                                style={styles.textInput}
+                                                style={{...styles.textInput ,borderColor: this.state.colorcvcNo,}}
                                                 placeholderTextColor="#7F8C8D"
                                                 onChangeText={(text) =>
                                                     this.setState({
@@ -989,6 +1278,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         paddingLeft: 10,
         marginVertical: 5,
-        borderColor: "#154360",
+   
     },
 });
