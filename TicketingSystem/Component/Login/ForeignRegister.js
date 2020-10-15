@@ -248,7 +248,7 @@ class ForeignRegister extends Component {
                         marginHorizontal: 20,
                       }}
                     >
-                      Tocken Number
+                      Token Number
                     </Text>
                     <TextInput
                       onFocus={this.onFocus}

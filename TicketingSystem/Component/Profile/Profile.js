@@ -214,7 +214,7 @@ export default class profile extends Component {
                                 <View style={styles.menuItem}>
                                     <Icon name="id-card" color="#154360" size={25}/>
                                     <Text style={styles.menuItemText}>
-                                        Tocken Number - {this.state.qrCode}
+                                        Token Number - {this.state.qrCode}
                                     </Text>
                                 </View>
                             </View>

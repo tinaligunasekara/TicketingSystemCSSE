@@ -334,7 +334,7 @@ class AccountDetails extends Component {
                         <Text
                           style={{ color: "#154360", marginHorizontal: 20 }}
                         >
-                          Tocken Number
+                          Token Number
                         </Text>
                         <TextInput
                           onFocus={this.onFocus}

@@ -36,7 +36,7 @@ const Drawer = createDrawerNavigator();
 
 const StackScreen = () => {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="AppDrawer">
       <Stack.Screen
         name="Register"
         component={Register}
