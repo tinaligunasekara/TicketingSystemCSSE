@@ -68,6 +68,15 @@ export function DrawerContent(props) {
               props.navigation.navigate("DashboardDrawer");
             }}
           />
+             <DrawerItem
+            icon={({ color, size }) => (
+              <Icon name="car" color={color} size={size} />
+            )}
+            label="Start Ride"
+            onPress={() => {
+              props.navigation.navigate("StartRideDrawer");
+            }}
+          />
           <DrawerItem
             icon={({ color, size }) => (
               <Icon name="account-outline" color={color} size={size} />
@@ -83,7 +92,7 @@ export function DrawerContent(props) {
             )}
             label="Account Balance"
             onPress={() => {
-              props.navigation.navigate("profileDrawer");
+              props.navigation.navigate("AccountDetailsDrawer");
             }}
           />
           <DrawerItem
@@ -97,6 +106,10 @@ export function DrawerContent(props) {
               <Icon name="account-check-outline" color={color} size={size} />
             )}
             label="Support"
+           
+            onPress={() => {
+              props.navigation.navigate("TransportManagerDrawer");
+            }}
           />
         </Drawer.Section>
       </DrawerContentScrollView>

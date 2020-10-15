@@ -1,0 +1,12 @@
+diff a/TicketingSystem/.expo/packager-info.json b/TicketingSystem/.expo/packager-info.json	(rejected hunks)
+@@ -1,10 +0,0 @@
+-{
+-  "expoServerPort": 19000,
+-  "packagerPort": 19001,
+-  "packagerPid": 12684,
+-  "devToolsPort": 19002,
+-  "expoServerNgrokUrl": null,
+-  "packagerNgrokUrl": null,
+-  "ngrokPid": null,
+-  "webpackServerPort": null
+-}
