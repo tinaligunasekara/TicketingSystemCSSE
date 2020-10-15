@@ -206,7 +206,7 @@ export default class TransportManager extends Component {
                     Date
                   </Text>
                   <DatePicker
-                                  style={{ ...styles.textInput, width: "100%" }}
+                                  style={{ ...styles.textInput, width: 315 }}
                                   date={this.state.date}
                                   mode="date"
                                   placeholder="select date"
@@ -327,7 +327,7 @@ export default class TransportManager extends Component {
                     Date
                   </Text>
                   <DatePicker
-                                  style={{ ...styles.textInput, width: "100%" }}
+                                  style={{ ...styles.textInput, width: 315 }}
                                   date={this.state.date}
                                   mode="date"
                                   placeholder="select date"
@@ -349,7 +349,7 @@ export default class TransportManager extends Component {
                     Day
                   </Text>
                   <DatePicker
-                                  style={{ ...styles.textInput, width: "100%" }}
+                                  style={{ ...styles.textInput, width: 315 }}
                                   date={this.state.date}
                                   mode="date"
                                   placeholder="select date"
