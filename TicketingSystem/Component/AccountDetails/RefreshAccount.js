@@ -344,7 +344,7 @@ class RefreshAccount extends Component {
                         <View style={styles.menuItem}>
                           <Icon name="id-card" color="#154360" size={25} />
                           <Text style={styles.menuItemText}>
-                            &nbsp;&nbsp; Tocken Number - 960591313
+                            &nbsp;&nbsp; Token Number - 960591313
                           </Text>
                         </View>
                       </View>
