@@ -573,7 +573,7 @@ validateMobilePhone =mobileNo=>{
                         marginHorizontal: 20,
                       }}
                     >
-                      Payment Mode
+                      Account Details
                     </Text>
 
                     <TouchableOpacity
@@ -590,7 +590,7 @@ validateMobilePhone =mobileNo=>{
                           color: "#7F8C8D",
                         }}
                       >
-                        Payment method
+                        Account Details
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -910,7 +910,7 @@ validateMobilePhone =mobileNo=>{
                                                     color: "#222222",
                                                 }}
                                             >
-                                                Payment Method
+                                               Account Details
                                             </Text>
                                         </View>
                                         <View
