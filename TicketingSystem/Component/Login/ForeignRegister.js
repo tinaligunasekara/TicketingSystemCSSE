@@ -66,6 +66,7 @@ class ForeignRegister extends Component {
                                     email :'',
                                     tokenNumber:this.state.tokenNo,
                                     password:this.state.password,
+                                    userName :this.state.username,
                                     foreigner :{
                                         foreignerId :0,
                                         passportNumber : this.state.passportNo
