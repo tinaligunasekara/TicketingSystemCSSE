@@ -37,21 +37,19 @@ class AccountDetails extends Component {
     this.state = {
       date: "2016-05-15",
       modalState: false,
+        qrCode :'',
       TokenNo: 0,
         token:0,
-        balance:0
+        balance:0.00
     };
   }
 
+  componentDidMount(){
+      this.qrCodeFun();
+  }
 
 
   manageSave = async ()  => {
-    console.log("modalstate : " + this.state.modalState);
-      let token = await AsyncStorage.getItem('tokenNumber');
-    this.setState({
-      TokenNo: 123,
-    });
-
     if (this.state.modalState === true) {
       this.setState({
         modalState: false,
@@ -61,19 +59,44 @@ class AccountDetails extends Component {
         modalState: true,
       });
     }
+    this.getBalance();
   };
+
+  getBalance(){
+      axios.get(constants.spring_backend_url + '/api/user/checkbalance/'+this.state.qrCode)
+          .then(res => {
+              if(res.data!==null){
+                  this.setState({
+                      modalState: true,
+                      balance :res.data
+                  });
+              }
+          }).catch(function (error) {
+      })
+  }
+    qrCodeFun = async () => {
+        try {
+            let qrCode = await AsyncStorage.getItem('tokenNumber');
+
+            this.setState({
+                qrCode: qrCode,
+                loaderStatus: false
+            })
+        } catch (error) {
+
+        }
+    }
 
     refreshAccount(){
         if(this.state.token!= 0){
             console.log("token!!")
             if(this.state.balance != 0){
                 console.log("balance")
-
                 const refreshAcc={
                     token:this.state.token,
                     balance: this.state.balance
                 }
-
+                console.log(refreshAcc)
                 axios.post(constants.spring_backend_url + '', refreshAcc)
                     .then(res => {
                         if(res.data!==null){
@@ -95,6 +118,7 @@ class AccountDetails extends Component {
       { label: "Male     ", value: 0 },
       { label: "Female", value: 1 },
     ];
+
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1.5 }}>
@@ -379,7 +403,7 @@ class AccountDetails extends Component {
                             backgroundColor: "white",
                           }}
                           placeholderTextColor="#000000"
-                          value={this.state.TokenNo}
+                          value={this.state.qrCode}
                           onChangeText={(TokenNo) =>
                             this.setState({ TokenNo })
                           }
@@ -432,7 +456,9 @@ class AccountDetails extends Component {
                             placeholder="1000.00"
                             style={styles.textInput}
                             placeholderTextColor="#7F8C8D"
-                          />
+                          >
+                              {this.state.balance}
+                          </TextInput>
                         </View>
                         <View
                           style={{
