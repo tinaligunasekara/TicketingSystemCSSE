@@ -367,7 +367,7 @@ class AccountDetails extends Component {
                         <Text
                           style={{ color: "#154360", marginHorizontal: 20 }}
                         >
-                          Tocken Number
+                          Token Number
                         </Text>
                         <TextInput
                           onFocus={this.onFocus}
@@ -428,6 +428,7 @@ class AccountDetails extends Component {
                           </Text>
                           <TextInput
                             autoFocus={false}
+                            editable={false}
                             placeholder="1000.00"
                             style={styles.textInput}
                             placeholderTextColor="#7F8C8D"
@@ -448,6 +449,7 @@ class AccountDetails extends Component {
                           </Text>
                           <TextInput
                             autoFocus={false}
+                            editable={false}
                             placeholder="Debits"
                             style={styles.textInput}
                             placeholderTextColor="#7F8C8D"
@@ -464,10 +466,11 @@ class AccountDetails extends Component {
                               marginHorizontal: 20,
                             }}
                           >
-                            Paid for others
+                            Amount Paid for Others
                           </Text>
                           <TextInput
                             autoFocus={false}
+                            editable={false}
                             placeholder="Paid"
                             style={styles.textInput}
                             placeholderTextColor="#7F8C8D"

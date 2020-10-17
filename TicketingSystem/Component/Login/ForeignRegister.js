@@ -66,6 +66,7 @@ class ForeignRegister extends Component {
                                     email :'',
                                     tokenNumber:this.state.tokenNo,
                                     password:this.state.password,
+                                    userName :this.state.username,
                                     foreigner :{
                                         foreignerId :0,
                                         passportNumber : this.state.passportNo
@@ -248,7 +249,7 @@ class ForeignRegister extends Component {
                         marginHorizontal: 20,
                       }}
                     >
-                      Tocken Number
+                      Token Number
                     </Text>
                     <TextInput
                       onFocus={this.onFocus}
