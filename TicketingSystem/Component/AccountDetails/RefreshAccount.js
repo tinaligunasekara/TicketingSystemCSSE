@@ -394,6 +394,31 @@ class RefreshAccount extends Component {
                             </Text>
                           </View>
                         </TouchableOpacity>
+
+                        <TouchableOpacity
+                         
+                        
+                        >
+                          <View
+                            style={{
+                              ...styles.button,
+                              backgroundColor: "#154360",
+                              borderWidth: 1,
+                              borderColor: "white",
+                              opacity: this.buttonOpacity,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 20,
+                                fontWeight: "bold",
+                                color: "white",
+                              }}
+                            >
+                              PAY FOR OTHERS
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
                       </View>
 
                       {/* ssadda */}
