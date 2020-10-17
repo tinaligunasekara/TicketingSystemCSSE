@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
     Container,
     Header,
@@ -32,67 +32,67 @@ class Register extends Component {
             modalState: false,
             modalStateValidation: false,
             modalStatepayment: false,
-            name:'',
-            nic:'',
-            mobileNo:'',
-            address:'',
-            email:'',
-            paymentMode:'',
-            cardHoldName:'',
-            cardNo:'',
-            expiredDate:'',
-            cvcNo:'',
-            password:'',
-            conPassword:'',
-            username:'',
-            paymentMethodId:'',
-            cardHoldersName:'',
-            cardNumber:'',
-            cvcNumber:'',
-            expireDate:'',
+            name: '',
+            nic: '',
+            mobileNo: '',
+            address: '',
+            email: '',
+            paymentMode: '',
+            cardHoldName: '',
+            cardNo: '',
+            expiredDate: '',
+            cvcNo: '',
+            password: '',
+            conPassword: '',
+            username: '',
+            paymentMethodId: '',
+            cardHoldersName: '',
+            cardNumber: '',
+            cvcNumber: '',
+            expireDate: '',
 
 
-            colorname:'#154360',
-            colornic:'#154360',
-            colormobileNo:'#154360',
-            coloraddress:'#154360',
-            coloremail:'#154360',
-            colorpaymentMode:'#154360',
-            colorcardHoldName:'#154360',
-            colorcardNo:'#154360',
-            colorexpiredDate:'#154360',
-            colorcvcNo:'#154360',
-            colorpassword:'#154360',
-            colorconPassword:'#154360',
-            colorusername:'#154360',
-            colorpaymentMethodId:'#154360',
-            colorcardHoldersName:'#154360',
-            colorcardNumber:'#154360',
-            colorcvcNumber:'#154360',
-            colorexpireDate:'#154360',
+            colorname: '#154360',
+            colornic: '#154360',
+            colormobileNo: '#154360',
+            coloraddress: '#154360',
+            coloremail: '#154360',
+            colorpaymentMode: '#154360',
+            colorcardHoldName: '#154360',
+            colorcardNo: '#154360',
+            colorexpiredDate: '#154360',
+            colorcvcNo: '#154360',
+            colorpassword: '#154360',
+            colorconPassword: '#154360',
+            colorusername: '#154360',
+            colorpaymentMethodId: '#154360',
+            colorcardHoldersName: '#154360',
+            colorcardNumber: '#154360',
+            colorcvcNumber: '#154360',
+            colorexpireDate: '#154360',
 
-            invalidText:'',
+            invalidText: '',
         };
     }
 
 
     manageSave = () => {
-      console.log("modalstate : " + this.state.modalState);
-      this.validateAllFields;
-      if (this.state.modalState === true) {
-          this.setState({
-              modalState: false,
-          });
-      
-      } else if (this.state.modalState === false) {
-          this.addLocalUser();
-         
+        console.log("modalstate : " + this.state.modalState);
+        this.validateAllFields;
+        if (this.state.modalState === true) {
+            this.setState({
+                modalState: false,
+            });
 
-      }
-    
-  };
-  managePayment = () => {
-    console.log("modalstate : " + this.state.modalStatepayment);
+        } else if (this.state.modalState === false) {
+            this.addLocalUser();
+
+
+        }
+
+    };
+    managePayment = () => {
+        console.log("modalstate : " + this.state.modalStatepayment);
 
     if (this.state.modalStatepayment === true) {
         this.setState({
@@ -190,6 +190,7 @@ validateAllFields = () => {
   //     }
 
   // }
+
   if(this.state.username==""){
       this.setState({
           colorusername: "#E74C3C",

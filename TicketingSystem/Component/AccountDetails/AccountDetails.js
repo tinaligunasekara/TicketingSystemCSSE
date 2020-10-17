@@ -10,15 +10,15 @@ import {
   Picker,
 } from "native-base";
 import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  AppRegistry,
-  ScrollView,
-  Dimensions,
-  TextInput,
-  Modal,
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    AppRegistry,
+    ScrollView,
+    Dimensions,
+    TextInput,
+    Modal, AsyncStorage,
 } from "react-native";
 
 import RadioForm, {
@@ -28,6 +28,8 @@ import RadioForm, {
 } from "react-native-simple-radio-button";
 import DatePicker from "react-native-datepicker";
 import { FontAwesome5 } from "@expo/vector-icons";
+import axios from "axios";
+import constants from "../Constants/constants";
 
 class AccountDetails extends Component {
   constructor(props) {
@@ -35,16 +37,19 @@ class AccountDetails extends Component {
     this.state = {
       date: "2016-05-15",
       modalState: false,
-      TockenNo: 0,
+        qrCode :'',
+      TokenNo: 0,
+        token:0,
+        balance:0.00
     };
   }
 
-  manageSave = () => {
-    console.log("modalstate : " + this.state.modalState);
-    this.setState({
-      TockenNo: 0,
-    });
+  componentDidMount(){
+      this.qrCodeFun();
+  }
 
+
+  manageSave = async ()  => {
     if (this.state.modalState === true) {
       this.setState({
         modalState: false,
@@ -54,7 +59,57 @@ class AccountDetails extends Component {
         modalState: true,
       });
     }
+    this.getBalance();
   };
+
+  getBalance(){
+      axios.get(constants.spring_backend_url + '/api/user/checkbalance/'+this.state.qrCode)
+          .then(res => {
+              if(res.data!==null){
+                  this.setState({
+                      modalState: true,
+                      balance :res.data
+                  });
+              }
+          }).catch(function (error) {
+      })
+  }
+    qrCodeFun = async () => {
+        try {
+            let qrCode = await AsyncStorage.getItem('tokenNumber');
+
+            this.setState({
+                qrCode: qrCode,
+                loaderStatus: false
+            })
+        } catch (error) {
+
+        }
+    }
+
+    refreshAccount(){
+        if(this.state.token!= 0){
+            console.log("token!!")
+            if(this.state.balance != 0){
+                console.log("balance")
+                const refreshAcc={
+                    token:this.state.token,
+                    balance: this.state.balance
+                }
+                console.log(refreshAcc)
+                axios.post(constants.spring_backend_url + '', refreshAcc)
+                    .then(res => {
+                        if(res.data!==null){
+                            this.setState({
+                                modalState: true,
+                            });
+                        }
+                    }).catch(function (error) {
+                })
+
+            }else{}
+        }else{}
+    }
 
   render() {
     let screenwidth = Dimensions.get("window").width;
@@ -63,6 +118,7 @@ class AccountDetails extends Component {
       { label: "Male     ", value: 0 },
       { label: "Female", value: 1 },
     ];
+
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1.5 }}>
@@ -242,7 +298,7 @@ class AccountDetails extends Component {
                       fontSize: 18,
                     }}
                   >
-                    Account Balance : Rs /=
+                    Account Balance : Rs {this.state.balance} /=
                   </Text>
                 </View>
 
@@ -330,6 +386,7 @@ class AccountDetails extends Component {
                         borderRadius: 20,
                       }}
                     >
+
                       <View style={{ marginTop: 15 }}>
                         <Text
                           style={{ color: "#154360", marginHorizontal: 20 }}
@@ -340,14 +397,15 @@ class AccountDetails extends Component {
                           onFocus={this.onFocus}
                           autoFocus={false}
                           keyboardType="number-pad"
-                          placeholder="960591313"
+                          placeholder=""
                           style={{
                             ...styles.textInput,
                             backgroundColor: "white",
                           }}
-                          placeholderTextColor="#C0C0C0"
-                          onChangeText={(TockenNo) =>
-                            this.setState({ TockenNo })
+                          placeholderTextColor="#000000"
+                          value={this.state.qrCode}
+                          onChangeText={(TokenNo) =>
+                            this.setState({ TokenNo })
                           }
                         ></TextInput>
                       </View>
@@ -398,7 +456,9 @@ class AccountDetails extends Component {
                             placeholder="1000.00"
                             style={styles.textInput}
                             placeholderTextColor="#7F8C8D"
-                          />
+                          >
+                              {this.state.balance}
+                          </TextInput>
                         </View>
                         <View
                           style={{
