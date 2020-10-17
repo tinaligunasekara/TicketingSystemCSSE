@@ -190,6 +190,7 @@ validateAllFields = () => {
   //     }
 
   // }
+
   if(this.state.username==""){
       this.setState({
           colorusername: "#E74C3C",

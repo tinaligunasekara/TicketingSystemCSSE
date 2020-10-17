@@ -10,15 +10,15 @@ import {
   Picker,
 } from "native-base";
 import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  AppRegistry,
-  ScrollView,
-  Dimensions,
-  TextInput,
-  Modal,
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    AppRegistry,
+    ScrollView,
+    Dimensions,
+    TextInput,
+    Modal, AsyncStorage,
 } from "react-native";
 
 import RadioForm, {
@@ -28,6 +28,8 @@ import RadioForm, {
 } from "react-native-simple-radio-button";
 import DatePicker from "react-native-datepicker";
 import { FontAwesome5 } from "@expo/vector-icons";
+import axios from "axios";
+import constants from "../Constants/constants";
 
 class AccountDetails extends Component {
   constructor(props) {
@@ -35,14 +37,19 @@ class AccountDetails extends Component {
     this.state = {
       date: "2016-05-15",
       modalState: false,
-      TockenNo: 0,
+      TokenNo: 0,
+        token:0,
+        balance:0
     };
   }
 
-  manageSave = () => {
+
+
+  manageSave = async ()  => {
     console.log("modalstate : " + this.state.modalState);
+      let token = await AsyncStorage.getItem('tokenNumber');
     this.setState({
-      TockenNo: 0,
+      TokenNo: 123,
     });
 
     if (this.state.modalState === true) {
@@ -55,6 +62,31 @@ class AccountDetails extends Component {
       });
     }
   };
+
+    refreshAccount(){
+        if(this.state.token!= 0){
+            console.log("token!!")
+            if(this.state.balance != 0){
+                console.log("balance")
+
+                const refreshAcc={
+                    token:this.state.token,
+                    balance: this.state.balance
+                }
+
+                axios.post(constants.spring_backend_url + '', refreshAcc)
+                    .then(res => {
+                        if(res.data!==null){
+                            this.setState({
+                                modalState: true,
+                            });
+                        }
+                    }).catch(function (error) {
+                })
+
+            }else{}
+        }else{}
+    }
 
   render() {
     let screenwidth = Dimensions.get("window").width;
@@ -242,7 +274,7 @@ class AccountDetails extends Component {
                       fontSize: 18,
                     }}
                   >
-                    Account Balance : Rs /=
+                    Account Balance : Rs {this.state.balance} /=
                   </Text>
                 </View>
 
@@ -330,6 +362,7 @@ class AccountDetails extends Component {
                         borderRadius: 20,
                       }}
                     >
+
                       <View style={{ marginTop: 15 }}>
                         <Text
                           style={{ color: "#154360", marginHorizontal: 20 }}
@@ -340,14 +373,15 @@ class AccountDetails extends Component {
                           onFocus={this.onFocus}
                           autoFocus={false}
                           keyboardType="number-pad"
-                          placeholder="960591313"
+                          placeholder=""
                           style={{
                             ...styles.textInput,
                             backgroundColor: "white",
                           }}
-                          placeholderTextColor="#C0C0C0"
-                          onChangeText={(TockenNo) =>
-                            this.setState({ TockenNo })
+                          placeholderTextColor="#000000"
+                          value={this.state.TokenNo}
+                          onChangeText={(TokenNo) =>
+                            this.setState({ TokenNo })
                           }
                         ></TextInput>
                       </View>
