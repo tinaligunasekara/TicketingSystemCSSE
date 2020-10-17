@@ -72,14 +72,13 @@ export default class profile extends Component {
 
     render() {
         var qr = this.state.qrCode;
-        console.log('JJJJJJJJJJJJJJJ');
-        console.log(qr);
-        console.log('jjjjjjjjjjjjj')
         return (
 
 
             <View style={{flex: 1}}>
+               
                 <View style={{flex: 1.5}}>
+                <ScrollView>
                     <View
                         style={{
                             flex: 1,
@@ -221,7 +220,9 @@ export default class profile extends Component {
                             </View>
                         </SafeAreaView>
                     </View>
+                    </ScrollView>
                 </View>
+               
             </View>
         );
     }

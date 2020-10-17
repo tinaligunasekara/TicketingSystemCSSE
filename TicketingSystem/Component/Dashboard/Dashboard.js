@@ -71,9 +71,9 @@ export default class Dashboard extends Component {
                 }}
               >
                 <TouchableOpacity
-                // onPress={() => {
-                //   this.props.navigation.navigate("PadocksFieldViewDrawer");
-                // }}
+                onPress={() => {
+                  this.props.navigation.navigate("StartRideDrawer");
+                }}
                 >
                   <View
                     style={{

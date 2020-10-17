@@ -18,6 +18,8 @@ import Register from "./Component/Login/Register";
 import ForeignRegister from "./Component/Login/ForeignRegister";
 import AccountDetails from "./Component/AccountDetails/AccountDetails";
 import RefreshAccount from "./Component/AccountDetails/RefreshAccount";
+import TransportManager from "./Component/Admin/TransportManager";
+import StartRide from "./Component/StartRide/StartRide";
 
 function cacheImages(images) {
   return images.map((image) => {
@@ -81,6 +83,18 @@ const StackScreen = () => {
         component={RefreshAccount}
         options={{ headerShown: false }}
       />
+
+<Stack.Screen
+        name="TransportManager"
+        component={TransportManager}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="StartRide"
+        component={StartRide}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -94,6 +108,8 @@ const AppDrawer = () => {
         <Drawer.Screen name="LoginDrawer" component={Login} />
         <Drawer.Screen name="AccountDetailsDrawer" component={AccountDetails} />
         <Drawer.Screen name="RefreshAccountDrawer" component={RefreshAccount} />
+        <Drawer.Screen name="TransportManagerDrawer" component={TransportManager} />
+        <Drawer.Screen name="StartRideDrawer" component={StartRide} />
       </Drawer.Navigator>
     </Root>
   );
