@@ -29,6 +29,8 @@ import RadioForm, {
 import DatePicker from "react-native-datepicker";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import axios from "axios";
+import constants from "../Constants/constants";
 
 class RefreshAccount extends Component {
   constructor(props) {
@@ -38,8 +40,87 @@ class RefreshAccount extends Component {
       modalState: false,
       TockenNo: 0,
       payState: false,
+      name:"",
+      amount :0,
+      cvc:0,
+        cardNum:0,
+        expireDate:"",
+
+
+        coloramount:'#154360',
+        colorcardHoldName:'#154360',
+        colorcardNo:'#154360',
+        colorexpiredDate:'#154360',
+        colorcvcNo:'#154360'
+
     };
   }
+
+    validateAllFields = () => {
+        console.log("card holder name : " + this.state.name);
+        console.log("Card Number  :" + this.state.cardNum );
+        console.log("CVC :" + this.state.cvc);
+        console.log("Date :" + this.state.expireDate );
+        console.log("Amount :" + this.state.amount );
+
+        this.setState({
+            colorpaymentMode:'#154360',
+            colorcardHoldName:'#154360',
+            colorcardNo:'#154360',
+            colorexpiredDate:'#154360',
+            colorcvcNo:'#154360',
+
+
+        });
+        console.log("color2 :" + this.state.colorpaymentMode );
+
+
+        if(this.state.name == ""){
+            this.setState({
+                colorname: "#E74C3C",
+
+            });
+        }
+
+        if(this.state.name==""){
+            this.setState({
+                colorcardHoldersName: "#E74C3C",
+            });
+        }
+        if(this.state.cardNum==""){
+            this.setState({
+                colorcardNumber: "#E74C3C",
+            });
+        }
+
+        if(this.state.expireDate==""){
+            this.setState({
+                colorexpireDate: "#E74C3C",
+            });
+        }
+        if(this.state.cvc == ""){
+            this.setState({
+                colorcvcNo: "#E74C3C",
+            });
+        }
+        if(this.state.cardHoldersName !=="" && this.state.cardNumber !== "" && this.state.cvcNo !== "" && this.state.expireDate !== ""){
+
+            this.setState({
+                colorpaymentMode: "#154360",
+            });
+            console.log("color3 :" + this.state.colorpaymentMode );
+        }else{
+            this.setState({
+                colorpaymentMode: "#E74C3C",
+            });
+            console.log("color4 else :" + this.state.colorpaymentMode );
+        }
+
+
+
+        this.manageSave();
+
+    };
 
   paymanage = () => {
     console.log("modalstate : " + this.state.payState);
@@ -57,6 +138,7 @@ class RefreshAccount extends Component {
 
   manageSave = () => {
     console.log("modalstate : " + this.state.modalState);
+      this.validateAllFields;
     this.setState({
       TockenNo: 0,
     });
@@ -66,11 +148,47 @@ class RefreshAccount extends Component {
         modalState: false,
       });
     } else if (this.state.modalState === false) {
-      this.setState({
-        modalState: true,
-      });
+      this.AddPayment();
     }
   };
+
+  AddPayment(){
+      if(this.state.amount != 0){
+          console.log("amount")
+          if(this.state.name !=""){
+              console.log("name")
+              if(this.state.cardNum != 0){
+                  console.log("cardNum")
+                  if(this.state.expireDate!=""){
+                      console.log("expireDate")
+                      if(this.state.cvc != 0){
+                          console.log("cvc")
+
+                                      const pay={
+                                              amount:this.state.amount,
+                                              name: this.state.name,
+                                              cardNum: this.state.cardNum,
+                                              cvc:this.state.cvc,
+                                              expireDate:this.state.expireDate
+
+                                          }
+
+                                      axios.post(constants.spring_backend_url + '', pay)
+                                          .then(res => {
+                                              if(res.data!==null){
+                                                  this.setState({
+                                                      modalState: true,
+                                                  });
+                                              }
+                                          }).catch(function (error) {
+                                      })
+
+                      }else{}
+                  }else{}
+              }else{}
+          }else{}
+      }else{}
+  }
 
   render() {
     let screenwidth = Dimensions.get("window").width;
@@ -367,6 +485,11 @@ class RefreshAccount extends Component {
                             placeholder="1000.00"
                             style={styles.textInput}
                             placeholderTextColor="#7F8C8D"
+                            onChangeText={(text) =>
+                                this.setState({
+                                    amount:text
+                                })
+                            }
                           />
                         </View>
 
@@ -467,6 +590,11 @@ class RefreshAccount extends Component {
                                 placeholder="Name"
                                 style={styles.textInput}
                                 placeholderTextColor="#7F8C8D"
+                                onChangeText={(text) =>
+                                    this.setState({
+                                        name:text
+                                    })
+                                }
                               />
                             </View>
                             <View
@@ -488,6 +616,11 @@ class RefreshAccount extends Component {
                                 placeholder="Card No"
                                 style={styles.textInput}
                                 placeholderTextColor="#7F8C8D"
+                                onChangeText={(text) =>
+                                    this.setState({
+                                        cardNum:text
+                                    })
+                                }
                               />
                             </View>
                             <View style={{ flexDirection: "row" }}>
@@ -542,6 +675,11 @@ class RefreshAccount extends Component {
                                   placeholder="CVC"
                                   style={styles.textInput}
                                   placeholderTextColor="#7F8C8D"
+                                  onChangeText={(text) =>
+                                      this.setState({
+                                          cvc:text
+                                      })
+                                  }
                                 />
                               </View>
                             </View>
@@ -557,7 +695,7 @@ class RefreshAccount extends Component {
                           ></View>
                           <TouchableOpacity
                             style={{ marginTop: 10 }}
-                            onPress={this.manageSave}
+                            onPress={this.validateAllFields}
                           >
                             <View
                               style={{
